@@ -1,6 +1,6 @@
 // api请求地址
-const requestURL = `http://127.0.0.1:8000`
-// const requestURL = `http://backend.charlo.ren`
+// const requestURL = `http://127.0.0.1:8000`
+const requestURL = `http://47.101.44.16:8000`
 
 const requestAPI = {
 
