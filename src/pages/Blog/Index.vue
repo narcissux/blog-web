@@ -13,17 +13,21 @@
         </div>
       </div>
     </header>
+    <no-ssr>
     <mavon-editor v-model="article.content"
-     :subfield = "subfield"
-     :defaultOpen = "defaultOpen"
-     :toolbarsFlag = "toolbarsFlag"
-     :scrollStyle="scrollStyle"
-     :codeStyle="codeStyle"></mavon-editor>
+                  :subfield="subfield"
+                  :defaultOpen="defaultOpen"
+                  :toolbarsFlag="toolbarsFlag"
+                  :scrollStyle="scrollStyle"
+                  :codeStyle="codeStyle"
+                  :navigation="navigation" style="height:1000px"></mavon-editor>
+    </no-ssr>
   </div>
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
 import 'mavon-editor/dist/css/index.css'
+import request from 'src/consts/api/interface'
 
 export default {
   preFetch ({ store, currentRoute, previousRoute, redirect, ssrContext }) {
@@ -35,12 +39,14 @@ export default {
     editable: false,
     toolbarsFlag: false,
     scrollStyle: true,
+    navigation: false,
     codeStyle: 'tomorrow-night-eighties',
-    isEdit: false
+    isEdit: false,
+    article: {}
   }),
   computed: {
     ...mapState({
-      article: state => state.blogServer.currentBlog
+      // article: state =>  await request(token).blogRequest.retrieve(params)
     }),
     ...mapGetters({
 
@@ -60,7 +66,14 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('blogServer/retrieveBlog', { uuid: this.$router.currentRoute.params.blogid })
+  },
+  mounted () {
+    request().blogRequest.retrieve({ uuid: this.$router.currentRoute.params.blogid })
+      .then(resp => {
+        console.log(this.article)
+        this.article = Object.assign({}, this.article, resp.data.data)
+        console.log(this.article)
+      }).catch(err => { console.log(err) })
   }
 }
 </script>

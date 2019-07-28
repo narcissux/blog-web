@@ -18,19 +18,19 @@
           <q-btn flat class="q-mr-md" @click="createBlog">保存</q-btn>
         </q-toolbar>
       <q-field style="width:90%"
-        :error="error"
         error-label="Oops, we got an error."
-        :warning="warning"
         warning-label="Hey, we got a warning."
       >
         <q-input v-model="title"  stack-label="标题" color="pink-13"/>
         <q-select v-model="category" :options="categorySelect" stack-label="分类" color="pink-13"/>
         <q-chips-input v-model="tags"  stack-label="标签" color="pink-13"/>
       </q-field>
+        <no-ssr>
         <mavon-editor style="height:100%;width: 100%"
                       codeStyle='tomorrow-night-eighties'
                       v-model="content"
         ></mavon-editor>
+        </no-ssr>
 
       </q-modal-layout>
     </q-modal>
@@ -41,10 +41,14 @@
         <q-item-main
           :label="article.title"
           label-lines="1"
-          sublabel-lines="2"
-          :sublabel="article.content"
+          sublabel-lines
           dense
         >
+          <div class="wrap">
+            <div class="text">
+             {{article.content}}
+            </div>
+          </div>
           <q-item-tile stamp style="margin-bottom:0px">
             <span class="q-mr-sm text-pink-13"> {{article.updateTime}}</span>
             <span class="q-mr-sm text-pink-13"> 3评论</span>
@@ -52,6 +56,12 @@
           </q-item-tile>
         </q-item-main>
       </q-item>
+      <q-pagination
+        input
+        v-model="page"
+        :min="1"
+        :max="6"
+      />
       <q-btn
         round
         color="pink-13"
@@ -78,11 +88,11 @@
 import { mapState, mapGetters } from 'vuex'
 import 'mavon-editor/dist/css/index.css'
 import request from 'src/consts/api/interface'
-
 export default {
   preFetch ({ store, currentRoute, previousRoute, redirect, ssrContext }) {
   },
-  components: {},
+  components: {
+  },
   data () {
     return {
       addSwitch: false,
@@ -91,7 +101,8 @@ export default {
       category: '',
       content: '',
       author: '',
-      categorySelect: []
+      categorySelect: [],
+      page: ''
     }
   },
   computed: {
@@ -122,8 +133,8 @@ export default {
 
 <style lang="stylus">
   .section-card
-    margin-right 5%
-    margin-left 5%
+    margin-right 10%
+    margin-left 10%
 
     .title
       font-size 24px
@@ -143,4 +154,32 @@ export default {
       margin-top 10px
       padding-top: 2px
       padding-bottom: 2px
+  .wrap {
+    height: 40px;
+    line-height: 20px;
+    overflow: hidden;
+  }
+  .wrap .text {
+    float: right;
+    height: 40px;
+    margin-left: -5px;
+    width: 100%;
+    word-break: break-all;
+  }
+  .wrap::after {
+    float: bottom-r ;
+    content: "...";
+    height: 20px;
+    line-height: 20px;
+    /* 为三个省略号的宽度 */
+    width: 3em;
+    /* 使盒子不占位置 */
+    margin-left: -3em;
+    /* 移动省略号位置 */
+    position: relative;
+    left: 100%;
+    top: -20px;
+    padding-right: 5px;
+    text-align:right;
+  }
 </style>

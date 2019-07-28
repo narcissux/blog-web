@@ -1,10 +1,10 @@
 import request from 'src/consts/api/interface'
-const token = 'eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIxMDA4IiwiaXNzIjoieGlheWUiLCJ1aWQiOjEwMDgsImdyb3VwIjoibmFyY2lzc3V4IiwiZXhwIjoxNTcyNTU4ODE1fQ.MV35tztM5yofVVIdHFMikeS3OzSW3aR1WmWZjbiyh1yncJ4yCPxXWT2RDAuPVSzTyWbPVZmoQT32yujBLmw9Jn3HOJeaQvB1RosV3e7Q5nxjgh6xJqQgTBEuS3HjRRNBoShN-BthFkghxOTCa2sUidI9BXZNh768gH0ZfgM-g-0evMOThg4Zbk4kxy7DA3frhOMzlD29kKvZ67QtDLqXcbTlttK2-Q1Mf6jt3Nycm4eVITZqBFaZsCJ7VWxHMlE6m_U6eLsaKCgtZt_HoRPOjs1iPswejLBJRAtoB8hjy0JZf-u6O_3X1MdZBQBXlOJxBuUrJeB16WKwZmgMeJIaQA'
+const token = 'eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIxMDA4IiwiaXNzIjoieGlheWUiLCJ1aWQiOjEwMDgsImdyb3VwIjoibmFyY2lzc3V4IiwiZXhwIjoxNTcyOTUwOTQwfQ.la6Pxdu8Ruh7SjlpcqD1R03WG4lXn4UG0C5UOXNT1t37hAIoXoTZw9nEsSNR0zLX87ztd93oJpjHoZHTqOEAnv4b-xujT1Bpr8MUkU0ICJtM3P_w7CX0DzZBD6TcKX9Ux_se4Ugn4JMJfgm0xPStAKvDbSsU69M-RPvXUcWAO6xKKZkYw-rD3Jz1BpQa_1kvfd-0EWocr3UYKYb-VAbc6alP6fHmGWqrJuQieMBz-qUddHa5tQ6kLxawDlGNH931aKu_-b_Hwa_g5P1ww02HAEmevri3gPoHs3oMeVPRM8ifXxF0YkC57V9aRkhQ0iqC8jLUXP4YBRuQ4EjG1821Yg'
 export function listBlog ({ commit, rootState }, params) {
   return new Promise(async (resolve, reject) => {
     await request(token).blogRequest.list(params)
       .then(resp => {
-        commit('setBlogCount', resp.data.data.length)
+        commit('setBlogCount', resp.data.total)
         commit('setBlogList', resp.data.data)
         resolve()
       })

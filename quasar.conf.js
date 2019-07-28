@@ -6,7 +6,8 @@ module.exports = function (ctx) {
     plugins: [
       'i18n',
       'axios',
-      'mavonEditor'
+      'mavonEditor',
+      'NoSsr'
     ],
     css: [
       'app.styl'
@@ -21,7 +22,7 @@ module.exports = function (ctx) {
     supportIE: true,
     build: {
       scopeHoisting: true,
-      // vueRouterMode: 'history',
+      vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,

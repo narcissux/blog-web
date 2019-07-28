@@ -1,3 +1,4 @@
+
 export function setBlogParams (state, data) {
   state.blogParams = data
 }

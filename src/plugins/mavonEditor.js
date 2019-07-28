@@ -1,5 +1,5 @@
 import mavonEidtor from 'mavon-editor'
 
-export default ({ app, Vue }) => {
+export default ({ Vue }) => {
   Vue.use(mavonEidtor)
 }
